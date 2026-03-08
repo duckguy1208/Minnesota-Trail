@@ -2,29 +2,21 @@ import random
 
 #locations
 location = "Albert Lea"
-locations = ["Albert Lea", "Rochester", "Mankato", "Lakeville", "Minneapolis", "Hutchinson", "St. Cloud", "Sauk Center", "Brainerd", "Duluth", "Hibbing",  "Grand Rapids", "Bemidji", "Thief River Falls", "Warroad",]
+locations = ["Rochester", "Mankato", "Lakeville", "Minneapolis", "Hutchinson", "St. Cloud", "Sauk Center", "Brainerd", "Duluth", "Hibbing",  "Grand Rapids", "Bemidji", "Thief River Falls", "Warroad",]
 list_iterator = iter(locations)
 store_location = False
 
-#store locations
-if location == "Albert Lea":
-    store_location == True
-elif location == "Minneapolis":
-    store_location == True
-elif location == "Brainerd":
-    store_location == True
-elif location == "Bemidji":
-    store_location == True
+gameover = False
+if location in ["Albert Lea", "Minneapolis", "Brainerd", "Bemidji"]:
+    store_location = True
 else:
-    store_location == False
-
+    store_location = False
 
 player_health = 100
 player_hunger = 0 
 player_thirst = 0
 player_stamina = 100
-
-gameover = False
+player_money = 0
 
 def store():
     store_choice = ""
@@ -50,76 +42,90 @@ def store():
     else:
         print("Invalid Try Again")
 
-#attributes: health, hunger, thirst, stamina
+#player attributes
 def health_drain():
-    player_health =- 5
+    global player_health, gameover
+    player_health -= 5 # Decrement
     if player_health <= 0:
         print("You Died")
         gameover = True
              
 def health_recover():
-    player_health =+ 5
+    global player_health
+    player_health += 5 # Increment
     if player_health >= 100:
+        player_health = 100
         print("You Are Fully Healed")
 
-def hunger_drain(): #not working properly wont drain
-    player_hunger =+ 5
+def hunger_drain(): 
+    global player_hunger, gameover
+    player_hunger += 5
     if player_hunger >= 100:
         print("You Died Of Starvation")
         gameover = True
-            
 
 def hunger_recover():
-    player_hunger =- 5
+    global player_hunger
+    player_hunger -= 5
     if player_hunger <= 0:
+        player_hunger = 0
         print("You Are Full")
 
-def thirst_drain(): #not working properly wont drain
-    player_thirst =+ 5
+def thirst_drain(): 
+    global player_thirst, gameover
+    player_thirst += 5
     if player_thirst >= 100:
         print("You Died Of Dehydration")
         gameover = True
-           
 
 def thirst_recover(): 
-    player_thirst =- 5
+    global player_thirst
+    player_thirst -= 5
     if player_thirst <= 0:
+        player_thirst = 0
         print("You Are Fully Hydrated")
     
-def stamina_drain(): #not working properly wont drain
-    player_stamina =- 5
+def stamina_drain(): 
+    global player_stamina, gameover
+    player_stamina -= 5
     if player_stamina <= 0:
         print("You Died Of Exhaustion")
         gameover = True
-          
-    
-def stamina_recover():
-    player_stamina =+ 5
 
-#actions: travel, rest, hunt, status
-def status(): #not working properly wont display drained stats
-    print(location)
-    print("Health: " + str(player_health))
-    print("Hunger: " + str(player_hunger))
-    print("Thirst: " + str(player_thirst))
-    print("Stamina: " + str(player_stamina))    
+def stamina_recover():
+    global player_stamina
+    player_stamina += 5
+    if player_stamina > 100: player_stamina = 100
+
+def status():
+    print(f"\n--- STATUS ---")
+    print(f"Location: {location}")
+    print(f"Health: {player_health}")
+    print(f"Hunger: {player_hunger}")
+    print(f"Thirst: {player_thirst}")
+    print(f"Stamina: {player_stamina}")
 
 def travel():
+    global location, store_location
     stamina_drain()
-    print("Traveling")
-    location = next(list_iterator) #not working properly
+    try:
+        location = next(list_iterator)
+        print(f"Traveling to {location}...")
+        # Update if the new city has a store
+        if location in ["Albert Lea", "Minneapolis", "Brainerd", "Bemidji"]:
+            store_location = True
+        else:
+            store_location = False
+    except StopIteration:
+        print("You have reached the end of the trail!")
 
 def rest():
     time = input("How Long Do You Want To Rest For? ")
     stamina_recover()
     if player_stamina >= 85:
         print("You Feel Well Rested")
-    elif player_stamina <= 85:
-        print("You Feel Rested")
-    elif player_stamina <= 50:
-        print("You Are Still Tired")
     else:
-        print("You Are Super Tired")
+        print("You Feel Rested")
 
 def hunt():
     hunt_chance = random.randint(1, 10)
@@ -134,9 +140,47 @@ def hunt():
         thirst_drain()
         stamina_drain()
 
+#proffesion attributes
+def farmer():
+    global player_health, player_hunger, player_thirst, player_stamina, player_money
+    player_health += 10
+    player_hunger -= 10
+    player_thirst -= 10
+    player_stamina += 10
+    player_money = 500
 
+def carpenter():
+    global player_health, player_hunger, player_thirst, player_stamina, player_money
+    player_health += 5
+    player_hunger -= 5
+    player_thirst -= 5
+    player_stamina += 15
+    player_money = 1000
+
+
+def banker():
+    global player_health, player_hunger, player_thirst, player_stamina, player_money
+    player_health += 15
+    player_hunger -= 15
+    player_thirst -= 15
+    player_stamina += 5
+    player_money = 2000
 
 #character creation
+
+profesion = input("Choose Your Profession (Farmer, Carpenter, Banker): ").lower().strip()
+if profesion == "farmer":
+    farmer()
+    print("You Chose Farmer")   
+elif profesion == "carpenter":
+    carpenter()
+    print("You Chose Carpenter")
+elif profesion == "banker":
+    banker()
+    print("You Chose Banker")
+else:
+    print("Invalid Try Again")
+
 player = input("Enter Your Name: ")
 traveler1 = input("Enter The First Travelers Name: ")
 traveler2 = input("Enter The Second Travelers Name: ")
