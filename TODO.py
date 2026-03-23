@@ -9,3 +9,6 @@
 [] party members affected by environment
 [] curing ailments
 [] hunting mini game (maybe)
+[] better interface than terminal (jon maybe can use/teach me java or javascript to make a GUI)
+[] pygame?
+[] easter eggs
