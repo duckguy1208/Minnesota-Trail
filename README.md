@@ -1,5 +1,5 @@
 # Minnesota-Trail
-runs inside terminial (for now)
+Runs Inside Terminial (for now)
 
 
 Python based oregon trail clone set in the great state of minnesota
