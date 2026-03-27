@@ -231,7 +231,14 @@ traveler3 = input("Enter The Third Travelers Name: ")
 traveler4 = input("Enter The Forth Travelers Name: ")
 
 #starting store
-global total_food, total_water, total_medicine, total_ammo, total_oxen, total_wheels, total_axles, player_money
+total_food = 0
+total_water = 0
+total_medicine = 0
+total_ammo = 0
+total_oxen = 0
+total_wheels = 0
+total_axles = 0
+player_money = 0
 
 print("Welcome To Tieler's Shop")
 print("\nPrices:")
