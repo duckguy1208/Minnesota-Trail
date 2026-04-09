@@ -238,7 +238,6 @@ total_ammo = 0
 total_oxen = 0
 total_wheels = 0
 total_axles = 0
-player_money = 0
 
 print("Welcome To Tieler's Shop")
 print("\nPrices:")
