@@ -16,7 +16,7 @@ else:
 total_food = 0
 total_water = 0
 total_medicine = 0
-total_ammo = 0
+total_bait = 0
 total_oxen = 0
 total_wheels = 0
 total_axles = 0
@@ -38,7 +38,8 @@ def store():
         print("2. Water - $5")
         print("3. Medicine - $20")
         print("4. Rest - $15")
-        print("5. Exit Store")
+        print("5. Bait - $5")
+        print("6. Exit Store")
         store_choice = input("What Do You Want To Buy? ")
     if store_choice == "1":
         total_food += 1
@@ -59,8 +60,13 @@ def store():
         stamina_recover()
         player_money -= 15
         print("You Rested At The Store")
-        
+    
     elif store_choice == "5":
+        total_bait += 1
+        player_money -= 5
+        print("You Bought Bait")
+        
+    elif store_choice == "6":
         print("Thanks For Visiting The Store!")
 
     else:
@@ -155,15 +161,15 @@ def rest():
     else:
         print("You Feel Rested")
 
-def hunt():
-    hunt_chance = random.randint(1, 10)
-    if hunt_chance >= 5:
-        print("You Successfully Hunted")
+def fish():
+    fish_chance = random.randint(1, 10)
+    if fish_chance >= 5:
+        print("You Successfully Caught Fish")
         hunger_recover()
         thirst_recover()
         stamina_recover()
     else:
-        print("You Failed To Hunt")
+        print("You Failed To Catch Any Fish")
         hunger_drain()
         thirst_drain()
         stamina_drain()
@@ -234,7 +240,7 @@ traveler4 = input("Enter The Forth Travelers Name: ")
 total_food = 0
 total_water = 0
 total_medicine = 0
-total_ammo = 0
+total_bait = 0
 total_oxen = 0
 total_wheels = 0
 total_axles = 0
@@ -244,7 +250,7 @@ print("\nPrices:")
 print("Food - $10 Per LB")
 print("Water - $5 Per Gallon")
 print("Medicine - $20 Per Dose")
-print("Ammo - $15 Per Round")
+print("Bait - $5 Per Lure")
 print("Oxen - $15 Each")
 print("Wheels - $10 Each")
 print("Axles - $10 Each")
@@ -279,14 +285,14 @@ else:
     print("You Didn't Buy Any Medicine")
     print(f"You Have ${player_money} Left")
 
-ammo_amt = int(input("How Many Rounds Of Ammo Do You Want To Buy? "))
-if ammo_amt > 0 and ammo_amt * 15 <= player_money:
-    player_money -= ammo_amt * 15
-    total_ammo += ammo_amt 
-    print(f"You Bought {ammo_amt} Rounds Of Ammo")
+bait_amt = int(input("How Many Lures Do You Want To Buy? "))
+if bait_amt > 0 and bait_amt * 5 <= player_money:
+    player_money -= bait_amt * 5
+    total_bait += bait_amt
+    print(f"You Bought {bait_amt} Lures")
     print(f"You Have ${player_money} Left")
 else:
-    print("You Didn't Buy Any Ammo")
+    print("You Didn't Buy Any Bait")
     print(f"You Have ${player_money} Left")
 
 ox_amt = int(input("How Many Oxen Do You Want To Buy? "))
@@ -323,7 +329,7 @@ print("\nYou Bought: ")
 print(f"Food: {total_food} LBs")
 print(f"Water: {total_water} Gallons")
 print(f"Medicine: {total_medicine}")
-print(f"Ammo: {total_ammo}")
+print(f"Bait: {total_bait}")
 print(f"Oxen: {total_oxen}")
 print(f"Spare Wheels: {total_wheels}")
 print(f"Spare Axles: {total_axles}")
@@ -342,8 +348,8 @@ while gameover == False:
         travel()
     elif action == "rest":
         rest()
-    elif action == "hunt":
-        hunt()
+    elif action == "fish":
+        fish()
     elif action == "status":
         status()
     elif action == "shop": 
